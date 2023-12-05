@@ -1,10 +1,10 @@
 import { render } from "./render.js"; //import render "api", the colour code list and the normal font
 import { colourCodes } from "./colourCodes.js";
 import { normal } from "./normalFont.js";
-export { renderText }; //export function to call
+export { getRenderedText }; //export function to call
 
 //this function is called when you render text
-let renderText = (text = "no text specified", textColour = colourCodes.brightWhite, bgColour = colourCodes.black, font = normal) => { //the param defaults look wierd so you can use this with different colour codes
+let getRenderedText = (text = "no text specified", textColour = colourCodes.brightWhite, bgColour = colourCodes.black, font = normal) => { //the param defaults look wierd so you can use this with different colour codes
 
     let colourCodeArray = [] //the array in which the proscessed font code is stored until it gets converted into a string
 
@@ -32,11 +32,6 @@ let renderText = (text = "no text specified", textColour = colourCodes.brightWhi
         }
     }
     
-    let finalColourCodeString = "" //the string that gets the multiline colour code pasted into it from the array, rendering in one command might stop wierd things from happening with async code
-    
-    for (let linesConverted = 0; linesConverted < colourCodeArray.length; ++linesConverted) { //pastes the content from colourCodeArray into finalColourCodeString
-        
-        finalColourCodeString += `${colourCodeArray[linesConverted]}${colourCodes.newLine}`
-    }
-    render(finalColourCodeString)
+    return(colourCodeArray)
+
 }
