@@ -1,6 +1,6 @@
 {
   "name": "mwgiestools",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "simple 16 colour rendering utility for nodejs",
   "type": "module",
   "main": "./index.js",
