@@ -19,6 +19,6 @@ let render = (text) => { //the text param is the colour codes that get passed to
             process.exit(1) //this triggers if an invalid colour code is detected
         }
     }
-    commandConstruct += ' chalk.reset(` `))' //adds the closing braket to the console.log command
+    commandConstruct += ' chalk.reset(``))' //adds the closing braket to the console.log command
     eval(commandConstruct) //renders the text
 }
