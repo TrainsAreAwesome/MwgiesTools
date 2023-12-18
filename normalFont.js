@@ -1,7 +1,4 @@
-import { Chalk } from "chalk";
 export { normal }
-
-
 let normal = {
 
 

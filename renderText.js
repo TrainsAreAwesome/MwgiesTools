@@ -4,7 +4,7 @@ import { normal } from "./normalFont.js";
 export { renderText }; //export function to call
 
 //this function is called when you render text
-let renderText = (text = "no text specified", textColour = colourCodes.brightWhite, bgColour = colourCodes.black, font = normal) => { //the param defaults look wierd so you can use this with different colour codes
+let renderText = (text = "no text specified", textColour = colourCodes.white, bgColour = colourCodes.defaultBGColour, font = normal) => { //the param defaults look wierd so you can use this with different colour codes
 
     let colourCodeArray = [] //the array in which the proscessed font code is stored until it gets converted into a string
 

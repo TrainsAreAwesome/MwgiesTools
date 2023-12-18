@@ -1,5 +1,7 @@
 # MwgiesTools
-## A utility for creating a terminal based colour and pixels with NodeJS using Chalk
+## A utility for creating a terminal based colour and pixels with NodeJS using my ANSIEscapeAPI
+
+### DOES NOT WORK IN VSCODE TERMINAL
 
 MwgiesTools is in very early stages of development, but includes a basic 16 colour "rendering engine" and the ability to render text. Heres how to use them!
 

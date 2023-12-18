@@ -1,4 +1,4 @@
-import chalk from "chalk"; //import chalk, i know it says it doesnt use chalk, but thats because all the chalk refrences are strings in colourCodes.js that get executed at the end with an eval() command
+import * as AEAPI from "ansiescapeapi"; //import the ansi api, i know it says it doesnt use it, but thats because all the refrences are strings in colourCodes.js that get executed at the end
 import { colourCodes } from "./colourCodes.js"; //importing the list of colour codes
 export { getRenderedColourCodes }; //exporting the render function so you can use it in your files
 
@@ -27,11 +27,6 @@ let getRenderedColourCodes = (text) => { //the text param is the colour codes th
             console.error(`Error: Attemted to proscess invalid colour code '${text[currentChar]}' Source: mwgiesTools, getRenderedColourCodes.js (If you changed your colour codes, make sure you did so correctly!)`);
             process.exit(1); //this triggers if an invalid colour code is detected
         }
-    }
-    for (let arrayLineFinishingLoopIterations = 0; arrayLineFinishingLoopIterations < commandConstruct.length; ++arrayLineFinishingLoopIterations) {
-        if (commandConstruct[currentArrayLine]) {
-            commandConstruct[arrayLineFinishingLoopIterations] += ' chalk.reset(` `))'
-        } //adds the closing braket to the console.log command, for each entry in the array
     }
     return (commandConstruct); //returns the array of colour codes
 }
