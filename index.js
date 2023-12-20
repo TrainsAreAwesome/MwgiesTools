@@ -7,3 +7,8 @@ export {render}
 export {getRenderedColourCodes}
 export {renderText}
 export {getRenderedText}
+let testA = [
+    `QWERTYUIOPASDFGHJKLZXCVBNM`,
+    `DEF`
+]
+render(`R!RRR@R/R!RRR@R`, testA)

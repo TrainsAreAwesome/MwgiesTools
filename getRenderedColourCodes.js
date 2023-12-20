@@ -4,7 +4,7 @@ export { getRenderedColourCodes }; //exporting the render function so you can us
 
 //this function is whats called when you render something
 let getRenderedColourCodes = (text) => { //the text param is the colour codes that get passed to the renderer
-    let commandConstruct = [`console.log(`,] //this is the array that the proscesed colour codes are stored in while working on more colour codes
+    let commandConstruct = [`${AEAPI.hide}`,] //this is the array that the proscesed colour codes are stored in while working on more colour codes
     let currentArrayLine = 0 //tracks how many newline chars have been prossesed, and creates a new entry in the array for each
     let loopIterations = 0 //If this var increases to over the amount of chars prosced, it means that an invalid colour code has been sent to the render, and errors out
     if (!text) { console.log("Error: getRenderedColourCodes() function called without any colours to render (getRenderedColourCodes.js)"); process.exit(1); } //this statement is true if the text var has nothing in it
