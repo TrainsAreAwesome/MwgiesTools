@@ -52,5 +52,4 @@ let colourCodes = { //exporting the colour codes so other files can use them
     "\n": `${AEAPI.defaultBGColour}\n`,
     //the next codes are "continous", aka continue until stopped
     "!": `${AEAPI.unHide}`,
-    "@": `${AEAPI.hide}`,    
 }
