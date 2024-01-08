@@ -3,30 +3,67 @@ import { colourCodes } from "./colourCodes.js"; //importing the list of colour c
 export { getRenderedColourCodes }; //exporting the render function so you can use it in your files
 
 //this function is whats called when you render something
-let getRenderedColourCodes = (text) => { //the text param is the colour codes that get passed to the renderer
-    let commandConstruct = [`${AEAPI.hide}`,] //this is the array that the proscesed colour codes are stored in while working on more colour codes
-    let currentArrayLine = 0 //tracks how many newline chars have been prossesed, and creates a new entry in the array for each
+let getRenderedColourCodes = (codes, textArray = [], AEAPICodeArray = []) => { //the text param is the colour codes that get passed to the renderer
+
+    let commandConstruct = `${AEAPI.hide}` //this is the var that the proscesed colour codes are stored in while working on more colour codes
     let loopIterations = 0 //If this var increases to over the amount of chars prosced, it means that an invalid colour code has been sent to the render, and errors out
-    if (!text) { console.log("Error: getRenderedColourCodes() function called without any colours to render (getRenderedColourCodes.js)"); process.exit(1); } //this statement is true if the text var has nothing in it
+    let renderingText = false //this var tells the renderer if its rendering text
+    let textPortion = 0 //this var keeps count of what piece of text the renderer is proscesing, while rendering text
+    let textCharIndex = 0 //this keeps count of what character the renderer is rendering, while rendering text
+    let currentString = "" //this stores the current piece of text being worked on when rendering text
+    let currentCommand = 0 //this stores the index of the direct AEAPI commands, if any
 
-    for (let currentChar = 0; currentChar < text.length; ++loopIterations) { //loop to convert each char to rendered text
+    if (!codes) { console.log("Error: getRenderedColourCodes() function called without any colours to render (getRenderedColourCodes.js)"); AEAPI.errorNoise(); process.exit(1) } //this statement is true if the text var has nothing in it
 
-        if (colourCodes[text[currentChar]]) {
+    for (let currentChar = 0; currentChar < codes.length; ++loopIterations) { //loop to convert each char to rendered codes
 
-            if (text[currentChar] === colourCodes.newLine || text[currentChar] === "\n") { //if the next code is a newline then this runs
-                currentArrayLine = commandConstruct.length //this essentially adds an extra line to the array (an array with 1 item has a length of 1, not 0 so thats why it doesnt look like its adding anything)
-                commandConstruct[currentArrayLine] = `console.log(`
-                ++currentChar
-
-            } else { //if the next code isnt a newline then this runs
-                commandConstruct[currentArrayLine] += colourCodes[text[currentChar]] //looks up the colour code thats being proscesed in the colour code object and then adds the prosceded version to the render command
-                ++currentChar
+        if (codes[currentChar] === colourCodes.insertText) { //if the you want to insert text into your rendered codes, put a ! to start and put your text in as an array for the render function as the 2nd param
+            if (textArray[textPortion]) {
+                renderingText = true //if start rendering text
+                currentString = textArray[textPortion] //sets the current string to render to the current text portion
+                commandConstruct += `${AEAPI.unHide}` //lets the text be readable in the terminal
+                ++currentChar //increments the current colour code to be prosccesed
+                continue //skips to the next render cycle as we dont want the insertText char to mess things up with spacings
+            } else {
+                console.log("Error: Tried to render text with no text to render (mwgiesTools, getRenderecColourCodes.js)")
+                AEAPI.errorNoise()
+                process.exit(1)
             }
+        } else if (renderingText && textCharIndex === currentString.length) { //if finished rendering text portion then this runs
+            renderingText = false //tells renderer that it isnt rendering text
+            textCharIndex = 0 //resets the current char to render index to 0
+            commandConstruct += `${AEAPI.hide}` //hides text after the rendered text
+            ++textPortion //increments the counter which counts the current portion of text to render next
+        }
 
-        } else { //if the next code is invalid then this runs
-            console.error(`Error: Attemted to proscess invalid colour code '${text[currentChar]}' Source: mwgiesTools, getRenderedColourCodes.js (If you changed your colour codes, make sure you did so correctly!)`);
-            process.exit(1); //this triggers if an invalid colour code is detected
+        if (codes[currentChar] === colourCodes.AEAPICode) { //if the insert custom AEAPI char is detected
+            if (AEAPICodeArray[currentCommand]) {
+                commandConstruct += AEAPICodeArray[currentCommand] //add the command according to the index
+                ++currentChar //increment the index that keeps track of the current colour code
+                ++currentCommand //increment the custom command index
+                continue //and continue onto the next code
+            } else {
+                console.log("Error: Attemted to insert AEAPI or other code into colour code string, but no code was present (mwgiesTools, getRenderedColourCodes.js)")
+                AEAPI.errorNoise()
+                process.exit(1)
+            }
+        }
+
+        if (colourCodes[codes[currentChar]]) { //if the current colour code is valid
+            commandConstruct += colourCodes[codes[currentChar]]
+            if (!renderingText) { //if the renderer isnt rendering text then
+                commandConstruct += codes[currentChar] //look up the colour code thats being proscesed in the colour code object and then adds the prosceded version to the render command
+            } else if (currentString[textCharIndex]) { //if there is text for the renderer to render
+                commandConstruct += currentString[textCharIndex] //add the text to the prosscesed string
+                ++textCharIndex //and increment the character to be rendered
+            }
+            ++currentChar //increments the current colour code being rendered
+        } else { //if there was a code to render but it was invalid
+            console.error(`Error: Attemted to proscess invalid colour code '${codes[currentChar]}' Source: mwgiesTools, getRenderecColourCodes.js (If you changed your colour codes, make sure you did so correctly!)`); //this error gets printed out
+            AEAPI.errorNoise() //the error noise plays
+            process.exit(1) //and it quits with exit code 1
         }
     }
-    return (commandConstruct); //returns the array of colour codes
+    commandConstruct = AEAPI.getProsssedString(commandConstruct)
+    return commandConstruct
 }
