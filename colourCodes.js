@@ -26,7 +26,7 @@ let colourCodes = { //exporting the colour codes so other files can use them
     newLine: ("/"), //you can also use \n
     //the next codes are "continous", aka continue until stopped
     insertText: ("!"),
-    stopText: (`@`),
+    AEAPICode: ("#"),
 
     //if you customize your colour codes, you need to change the letter assigned to the colour codes above in the string value and below in the variable name
 
@@ -50,6 +50,7 @@ let colourCodes = { //exporting the colour codes so other files can use them
     D: `${AEAPI.defaultTextColour}`, //this equal to the text colour set for the users terminal
     "/": `${AEAPI.defaultBGColour}\n`,
     "\n": `${AEAPI.defaultBGColour}\n`,
-    //the next codes are "continous", aka continue until stopped
+    //these codes insert things from other params
     "!": `${AEAPI.unHide}`,
+    "#": ""
 }
