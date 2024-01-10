@@ -36,15 +36,15 @@ let render = (codes, textArray = [], AEAPICodeArray = []) => { //the codes param
         }
 
         if (codes[currentChar] === colourCodes.AEAPICode) { //if the insert custom AEAPI char is detected
-            if (AEAPICodeArray[currentCommand]) {
+            if (AEAPICodeArray[currentCommand]) { //if there is an AEAPI code to insert
                 commandConstruct += AEAPICodeArray[currentCommand] //add the command according to the index
                 ++currentChar //increment the index that keeps track of the current colour code
                 ++currentCommand //increment the custom command index
                 continue //and continue onto the next code
-            } else {
-                console.log("Error: Attemted to insert AEAPI or other code into colour code string, but no code was present (mwgiesTools, render.js)")
-                AEAPI.errorNoise()
-                process.exit(1)
+            } else { //if there isnt a command to insert
+                console.log("Error: Attemted to insert AEAPI code into colour code string, but no code was present (mwgiesTools, render.js)") //print this out
+                AEAPI.errorNoise() //make an error noise
+                process.exit(1) //and end the proscess with an error exit code
             }
         }
 

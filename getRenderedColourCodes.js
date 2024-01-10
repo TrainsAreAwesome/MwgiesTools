@@ -43,7 +43,7 @@ let getRenderedColourCodes = (codes, textArray = [], AEAPICodeArray = []) => { /
                 ++currentCommand //increment the custom command index
                 continue //and continue onto the next code
             } else {
-                console.log("Error: Attemted to insert AEAPI or other code into colour code string, but no code was present (mwgiesTools, getRenderedColourCodes.js)")
+                console.log("Error: Attemted to insert AEAPI code into colour code string, but no code was present (mwgiesTools, getRenderedColourCodes.js)")
                 AEAPI.errorNoise()
                 process.exit(1)
             }
