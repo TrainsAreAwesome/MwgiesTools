@@ -17,16 +17,16 @@ let render = (codes, textArray = [], AEAPICodeArray = []) => { //the codes param
     for (let currentChar = 0; currentChar < codes.length; ++loopIterations) { //loop to convert each char to rendered codes
 
         if (codes[currentChar] === colourCodes.insertText) { //if the you want to insert text into your rendered codes, put a ! to start and put your text in as an array for the render function as the 2nd param
-            if (textArray[textPortion]) {
+            if (textArray[textPortion]) { //if there is text that can be rendered
                 renderingText = true //if start rendering text
                 currentString = textArray[textPortion] //sets the current string to render to the current text portion
                 commandConstruct += `${AEAPI.unHide}` //lets the text be readable in the terminal
                 ++currentChar //increments the current colour code to be prosccesed
                 continue //skips to the next render cycle as we dont want the insertText char to mess things up with spacings
-            } else {
-                console.log("Error: Tried to render text with no text to render (mwgiesTools, render.js)")
-                AEAPI.errorNoise()
-                process.exit(1)
+            } else { //if there is no text that can be rendered
+                console.log("Error: Tried to render text with no text to render (mwgiesTools, render.js)") //print this
+                AEAPI.errorNoise() //make an error noise
+                process.exit(1) //error and crash
             }
         } else if (renderingText && textCharIndex === currentString.length) { //if finished rendering text portion then this runs
             renderingText = false //tells renderer that it isnt rendering text

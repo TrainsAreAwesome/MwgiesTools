@@ -64,6 +64,6 @@ let getRenderedColourCodes = (codes, textArray = [], AEAPICodeArray = []) => { /
             process.exit(1) //and it quits with exit code 1
         }
     }
-    commandConstruct = AEAPI.getProsssedString(commandConstruct)
-    return commandConstruct
+    commandConstruct = AEAPI.getProsssedString(commandConstruct) //gets the string ready to be reuturned
+    return commandConstruct //returns the string to the getRenderedColourCodes() function call
 }
